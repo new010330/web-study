@@ -2,6 +2,8 @@ package com.springboot.studyjunho.domain.board;
 
 import java.time.LocalDateTime;
 
+import com.springboot.studyjunho.web.dto.board.CreateBoardRespDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +23,13 @@ public class Board {
 	private LocalDateTime createdate;
 	private LocalDateTime updatedate;
 	
+	public CreateBoardRespDto toCreateBoardDto(boolean insertStatus) {
+		return CreateBoardRespDto.builder()
+				.boardcode(boardcode)
+				.title(title)
+				.usercode(usercode)
+				.content(content)
+				.insertStatus(insertStatus)
+				.build();
+	}
 }

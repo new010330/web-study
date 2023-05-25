@@ -6,7 +6,8 @@
 <mapper namespace="com.springboot.studyjunho.domain.board.BoardRepository">
 	<insert id="save" 
 			parameterType="com.springboot.studyjunho.domain.board.Board"
-			
+			useGeneratedKeys="true"
+			keyProperty="boardcode"
 			>
 	insert into
 		board_mst

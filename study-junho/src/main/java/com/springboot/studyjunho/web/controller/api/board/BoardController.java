@@ -2,13 +2,17 @@ package com.springboot.studyjunho.web.controller.api.board;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.studyjunho.service.board.BoardService;
+import com.springboot.studyjunho.web.dto.CMRespDto;
 import com.springboot.studyjunho.web.dto.board.CreateBoardReqDto;
+import com.springboot.studyjunho.web.dto.board.CreateBoardRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,14 +39,20 @@ public class BoardController {
 		System.out.println("title: " + createBoardReqDto.getTitle());
 		System.out.println("usercode: " + createBoardReqDto.getUsercode());
 		System.out.println("content: " + createBoardReqDto.getContent());
-		Boolean result = false;
 		
+		CreateBoardRespDto createBoardRespDto = null;
 		try {
-			result = boardService.createBoard(createBoardReqDto);
+			createBoardRespDto = boardService.createBoard(createBoardReqDto);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return ResponseEntity.ok().body(new CMRespDto<>(-1, "게시글 등록 실패", createBoardRespDto));
 		}
 		
-		return ResponseEntity.ok().body(result);
+		return ResponseEntity.ok().body(new CMRespDto<>(1, "게시글 등록 성공", createBoardRespDto));
+	}
+	
+	@GetMapping("/content/{boardcode}")
+	public ResponseEntity<?> getBoard(@PathVariable int boardcode) {
+		return ResponseEntity.ok().body(null);
 	}
 }

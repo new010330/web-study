@@ -2,8 +2,10 @@ package com.springboot.studyjunho.service.board;
 
 import org.springframework.stereotype.Service;
 
+import com.springboot.studyjunho.domain.board.Board;
 import com.springboot.studyjunho.domain.board.BoardRepository;
 import com.springboot.studyjunho.web.dto.board.CreateBoardReqDto;
+import com.springboot.studyjunho.web.dto.board.CreateBoardRespDto;
 
 import lombok.RequiredArgsConstructor;
 @Service
@@ -13,10 +15,18 @@ public class BoardServiceImpl implements BoardService{
 	private final BoardRepository boardRepository;
 
 	@Override
-	public boolean createBoard(CreateBoardReqDto createBoardReqDto) throws Exception {
+	public CreateBoardRespDto createBoard(CreateBoardReqDto createBoardReqDto) throws Exception {
 		System.out.println(createBoardReqDto);
 		
-		return boardRepository.save(createBoardReqDto.toEntity()) > 0;
+		Board boardEntity = createBoardReqDto.toEntity();
+		
+		System.out.println("DB 다녀오기 전: " + boardEntity);
+		int result = boardRepository.save(boardEntity);
+		System.out.println("DB 다녀온 후: " + boardEntity);
+		
+		boolean insertStatus = boardRepository.save(createBoardReqDto.toEntity()) > 0;
+		
+		return boardEntity.toCreateBoardDto(insertStatus);
 	}
 
 	@Override
