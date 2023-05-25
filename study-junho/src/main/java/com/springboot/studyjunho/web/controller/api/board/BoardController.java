@@ -30,7 +30,7 @@ public class BoardController {
 //	}
 	
 	@PostMapping("/content")
-	public ResponseEntity<?> addBoard(CreateBoardReqDto createBoardReqDto) {
+	public ResponseEntity<?> addBoard(@RequestBody CreateBoardReqDto createBoardReqDto) {
 		System.out.println("게시글 작성요청");
 		System.out.println("title: " + createBoardReqDto.getTitle());
 		System.out.println("usercode: " + createBoardReqDto.getUsercode());
