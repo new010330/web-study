@@ -20,4 +20,45 @@
 		now()
 		)
 	</insert>
+	
+	<select id="findBoardByBoardcode" 
+			parameterType="Integer"
+			resultType="com.springboot.studyjunho.domain.board.Board"
+			>
+	SELECT
+		bm.boardcode,
+		bm.title,
+		bm.usercode,
+		um.username,
+		bm.content,
+		bm.createdate,
+		bm.updatedate
+	FROM
+		board_mst bm
+		LEFT OUTER JOIN user_mst um ON(um.usercode = bm.usercode)
+	WHERE
+		bm.boardcode = #{boardcode};
+	</select>
+	
+	<select id="getBoardListofIndex"
+			parameterType="Integer"
+			resultType="com.springboot.studyjunho.domain.board.Board"
+			>
+	SELECT
+		bm.boardcode,
+		bm.title,
+		bm.usercode,
+		um.username,
+		bm.content,
+		bm.createdate,
+		bm.updatedate
+	FROM
+		board_mst bm
+		LEFT OUTER JOIN user_mst um ON(um.usercode = bm.usercode)
+	order by
+		bm.updatedate desc
+	limit
+		#{index}, 10;		
+	</select>
+	
 </mapper>

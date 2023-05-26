@@ -1,11 +1,15 @@
 package com.springboot.studyjunho.service.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springboot.studyjunho.domain.board.Board;
 import com.springboot.studyjunho.domain.board.BoardRepository;
 import com.springboot.studyjunho.web.dto.board.CreateBoardReqDto;
 import com.springboot.studyjunho.web.dto.board.CreateBoardRespDto;
+import com.springboot.studyjunho.web.dto.board.ReadBoardRespDto;
 
 import lombok.RequiredArgsConstructor;
 @Service
@@ -28,6 +32,23 @@ public class BoardServiceImpl implements BoardService{
 		
 		return boardEntity.toCreateBoardDto(insertStatus);
 	}
+	
+	@Override
+	public ReadBoardRespDto readBoard(int boardcode) throws Exception {
+		return boardRepository.findBoardByBoardcode(boardcode).toReadBoardDto();
+	}
+	
+	@Override
+	public List<ReadBoardRespDto> readBoardList(int page) throws Exception {
+		
+		List<ReadBoardRespDto> BoardDtoList = new ArrayList<ReadBoardRespDto>();
+		
+		boardRepository.getBoardListofIndex((page - 1) * 10 + 1).forEach(board -> {
+			BoardDtoList.add(board.toReadBoardDto());
+		});
+		
+		return BoardDtoList;
+	}
 
 	@Override
 	public boolean updateBoard(int boardcode, CreateBoardReqDto createBoardReqDto) throws Exception {
@@ -38,6 +59,7 @@ public class BoardServiceImpl implements BoardService{
 	public boolean deleteBoard(int boardcode) throws Exception {
 		return false;
 	}
+
 
 	
 	

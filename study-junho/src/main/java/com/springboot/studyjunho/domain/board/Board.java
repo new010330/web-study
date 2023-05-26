@@ -3,6 +3,7 @@ package com.springboot.studyjunho.domain.board;
 import java.time.LocalDateTime;
 
 import com.springboot.studyjunho.web.dto.board.CreateBoardRespDto;
+import com.springboot.studyjunho.web.dto.board.ReadBoardRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,17 @@ public class Board {
 				.usercode(usercode)
 				.content(content)
 				.insertStatus(insertStatus)
+				.build();
+	}
+	
+	public ReadBoardRespDto toReadBoardDto() {
+		return ReadBoardRespDto.builder()
+				.boardcode(boardcode)
+				.title(title)
+				.usercode(usercode)
+				.username(username)
+				.content(content)
+				.createdate(createdate)
 				.build();
 	}
 }
